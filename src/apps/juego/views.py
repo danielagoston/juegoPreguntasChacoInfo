@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from .models import Partida
 from apps.preguntas.models import Pregunta, Opcion
 
+from .forms import PartidaForm
+
 import random
 
 class ListaDePartidas(ListView):
@@ -30,6 +32,8 @@ class CrearPartida(CreateView):
         f = form.save(commit=False)
 
         preguntas = list(Pregunta.objects.filter(dificultadPregunta=f.dificultad))
+
+        print(preguntas)
         
         f.player1 = self.request.user
 
@@ -42,7 +46,7 @@ class CrearPartida(CreateView):
 class JugandoPartida(UpdateView):
     model = Partida
     template_name = 'jugandopartida.html'
-    fields = []
+    form_class = PartidaForm
     success_url = reverse_lazy('partidas')
 
     def form_valid(self, form):
