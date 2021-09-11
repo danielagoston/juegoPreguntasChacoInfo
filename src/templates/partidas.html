@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Lista de Partidas{% endblock title %}
+{% block content %}
+    <h1>Lista de Partidas</h1>
+    <br>
+
+    <a href="{% url 'nueva_partida' %}" class="btn btn-primary">Empezar una partida</a>
+
+    <hr>
+
+    {% if Partidas %}
+		<ul class="p-0 mb-5">
+				<table id="tablajs" class="table table-striped tab_resp">
+				  <thead>
+				    <tr>
+				      <th scope="col">#ID</th>
+				      <th scope="col">Dificultad</th>
+					  <th scope="col">Puntos</th>
+				      <th scope="col">¿Jugado?</th>
+				      <th scope="col">Jugar</th>
+				    </tr>
+				  </thead>
+
+				  <tbody>
+				    {% for x in Partidas %}
+						<tr>	      
+							<td><a href="">{{x.id}}</a></td>
+							<td>{{x.get_dificultad_display}}</td>
+							<td>{{x.puntaje}}</td>
+							<td>{{x.termino}}</td>
+							<td class="ag-alinear-texto-der">
+                                {% if x.termino %}
+                                    <span class="text-secondary">Finalizado</span>
+                                {%else%}
+                                    <a href="{% url 'juego' x.id %}" class="btn btn-primary">Jugar</a>
+                                {%endif%}
+							</td>
+						</tr>
+				    {% endfor %}
+				  </tbody>
+				</table>
+		</ul>	
+
+{%else%}
+    <div class="mt-10">
+        <h3 class="text-secondary text-center ag-mt-10 ag-mb-10">No hay partidas registradas para usted</h3>
+    </div>
+{% endif %}
+{% endblock content %}
